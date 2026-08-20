@@ -9,7 +9,7 @@ def test():
 
 @app.route("/")
 def home():
-    return render_template("payment.html")
+    return render_template("index.html")
 
 @app.route("/verifying.html")
 def verifying():
