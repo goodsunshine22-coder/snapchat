@@ -1,395 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sandbox Number</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            overflow: hidden;
-
-            display: grid;
-            place-items: center;
-
-            font-family: Arial, sans-serif;
-            color: white;
-
-            background:
-                radial-gradient(
-                    circle at 20% 20%,
-                    #4b4100,
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 80% 80%,
-                    #292300,
-                    transparent 30%
-                ),
-                #080808;
-        }
-
-        /* Floating background objects */
-
-        .float {
-            position: fixed;
-
-            font-size: 70px;
-
-            opacity: 0.18;
-
-            pointer-events: none;
-
-            transform-style: preserve-3d;
-
-            animation:
-                float 8s ease-in-out infinite;
-        }
-
-        .one {
-            left: 7%;
-            top: 12%;
-            animation-delay: -2s;
-        }
-
-        .two {
-            right: 8%;
-            top: 18%;
-
-            font-size: 95px;
-
-            animation-delay: -5s;
-        }
-
-        .three {
-            left: 12%;
-            bottom: 12%;
-
-            font-size: 60px;
-
-            animation-delay: -6s;
-        }
-
-        .four {
-            right: 14%;
-            bottom: 10%;
-
-            font-size: 80px;
-
-            animation-delay: -1s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform:
-                    translate3d(0, 0, 0)
-                    rotateX(0deg)
-                    rotateY(0deg);
-            }
-
-            50% {
-                transform:
-                    translate3d(0, -35px, 70px)
-                    rotateX(18deg)
-                    rotateY(25deg);
-            }
-        }
-
-        /* Main card */
-
-        .card {
-            position: relative;
-            z-index: 5;
-
-            width: 430px;
-            max-width: 92%;
-
-            padding: 42px;
-
-            text-align: center;
-
-            border-radius: 30px;
-
-            background: rgba(255, 255, 255, 0.08);
-
-            border: 1px solid rgba(255, 255, 255, 0.16);
-
-            backdrop-filter: blur(25px);
-
-            box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.6),
-                inset 0 1px rgba(255, 255, 255, 0.08);
-
-            transform:
-                perspective(900px)
-                rotateX(2deg);
-        }
-
-        .logo {
-            font-size: 70px;
-
-            filter:
-                drop-shadow(
-                    0 15px 20px rgba(0, 0, 0, 0.5)
-                );
-
-            animation:
-                logoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        h1 {
-            margin: 12px 0 8px;
-
-            font-size: 32px;
-        }
-
-        .subtitle {
-            margin-bottom: 30px;
-
-            color: #aaa;
-
-            font-size: 15px;
-        }
-
-        /* Input */
-
-        .input-box {
-            width: 100%;
-
-            padding: 17px;
-
-            border: none;
-            outline: none;
-
-            border-radius: 15px;
-
-            font-size: 17px;
-
-            background: rgba(255, 255, 255, 0.95);
-
-            color: #111;
-
-            transition:
-                transform 0.2s,
-                box-shadow 0.2s;
-        }
-
-        .input-box:focus {
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 8px 25px rgba(255, 217, 0, 0.2);
-        }
-
-        /* Button */
-
-        .continue-button {
-            width: 100%;
-
-            margin-top: 16px;
-
-            padding: 17px;
-
-            border: none;
-
-            border-radius: 15px;
-
-            background: #ffd900;
-
-            color: #111;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            transition:
-                transform 0.2s,
-                box-shadow 0.2s;
-        }
-
-        .continue-button:hover {
-            transform:
-                translateY(-3px)
-                scale(1.01);
-
-            box-shadow:
-                0 12px 30px rgba(255, 217, 0, 0.25);
-        }
-
-        .continue-button:active {
-            transform: translateY(0);
-        }
-
-        .sandbox-note {
-            margin-top: 20px;
-
-            color: #777;
-
-            font-size: 12px;
-        }
-
-        /* Small floating dots */
-
-        .dot {
-            position: fixed;
-
-            width: 8px;
-            height: 8px;
-
-            border-radius: 50%;
-
-            background: #ffd900;
-
-            opacity: 0.25;
-
-            animation:
-                dotFloat 6s ease-in-out infinite;
-
-            pointer-events: none;
-        }
-
-        .dot1 {
-            left: 30%;
-            top: 12%;
-        }
-
-        .dot2 {
-            right: 30%;
-            bottom: 15%;
-
-            animation-delay: -2s;
-        }
-
-        .dot3 {
-            left: 20%;
-            top: 70%;
-
-            animation-delay: -4s;
-        }
-
-        @keyframes dotFloat {
-
-            0%,
-            100% {
-                transform:
-                    translate3d(0, 0, 0);
-            }
-
-            50% {
-                transform:
-                    translate3d(25px, -30px, 40px);
-            }
-        }
-
-        /* Mobile */
-
-        @media (max-width: 600px) {
-
-            .card {
-                padding: 32px 25px;
-            }
-
-            .logo {
-                font-size: 58px;
-            }
-
-            h1 {
-                font-size: 27px;
-            }
-
-            .float {
-                font-size: 50px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Video Call</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', system-ui, sans-serif;
+  background: #05050a;
+  min-height: 100vh;
+  color: #f0f0f5;
+  overflow-x: hidden;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(124, 58, 237, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(219, 39, 119, 0.2) 0%, transparent 45%),
+    #05050a;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: float 16s ease-in-out infinite;
+}
+.bg-orb.o1 { width: 400px; height: 400px; background: #7c3aed; top: -10%; left: -5%; }
+.bg-orb.o2 { width: 320px; height: 320px; background: #db2777; bottom: 10%; right: -8%; animation-delay: -5s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -40px); }
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(18, 18, 28, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 36px 28px 32px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+}
+
+.call-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.call-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(167, 139, 250, 0.45);
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.12), 0 0 28px rgba(167, 139, 250, 0.2);
+  margin: 0 auto 14px;
+  display: block;
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+}
+
+.call-avatar-fallback {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+  border: 3px solid rgba(167, 139, 250, 0.45);
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #86efac;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.call-header h1 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.call-header p {
+  font-size: 0.9rem;
+  color: #9a9ab0;
+  line-height: 1.45;
+}
+
+.call-header .msg {
+  margin-top: 12px;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #e0e0f0;
+}
+
+form label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #9a9ab0;
+  margin-bottom: 6px;
+  margin-top: 4px;
+}
+
+input {
+  width: 100%;
+  padding: 13px 14px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #f0f0f5;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+input::placeholder {
+  color: #5c5c72;
+}
+
+input:focus {
+  outline: none;
+  border-color: rgba(99, 91, 255, 0.55);
+  background: rgba(99, 91, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.12);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.row > div {
+  flex: 1;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #635bff, #a855f7);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(99, 91, 255, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 36px rgba(99, 91, 255, 0.45);
+}
+
+.secure {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #6b6b80;
+}
+</style>
 </head>
-
 <body>
 
-    <!-- Floating sandbox background objects -->
+<div class="bg">
+  <div class="bg-orb o1"></div>
+  <div class="bg-orb o2"></div>
+</div>
 
-    <div class="float one">👻</div>
+<div class="page">
+  <div class="card">
 
-    <div class="float two">⭐</div>
+    <div class="call-header">
+      <div class="live-badge"><span class="live-dot"></span> Live call</div>
 
-    <div class="float three">👻</div>
+      <img
+        src="https://lh3.googleusercontent.com/chat_attachment/AP1Ws4txj_tsitn9llJP64jP2fdLAYlSjV13wauKQ-g97u9RlvuqToyCkQ8yrBrLF-_SnOCsvQLR3_EZKyrrsA_wbZYpP24m7lWYWGl6kYTJg_0mLVbERCXxWXaUvhp8ndk_Cwx1hU_umpljwq5PeFjeX7I6nclSEgxb-KixnSnVJ2r5a0wcb9Fdt9Xbxb6T1tjJ1xIcmoBFvuImljjA1CG9pCT3cPptH4K7EHajcmSpDlWqbqIL6li0a0lmvC379iYsRZesP6VhGM_ybMsGuOa3svOHcwe1B0ufmv_b9jCT7CEk4kN_7LfH8KWe2nZtnLIZ45M=w1366-h652-rw"
+        alt="Angie"
+        class="call-avatar"
+        onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';"
+      />
+      <div id="avatarFallback" class="call-avatar-fallback" style="display:none;">S</div>
 
-    <div class="float four">✨</div>
-
-    <div class="dot dot1"></div>
-    <div class="dot dot2"></div>
-    <div class="dot dot3"></div>
-
-
-    <!-- Main form -->
-
-    <div class="card">
-
-        <div class="logo">
-            👻
-        </div>
-
-        <h1>
-            Enter Your Number
-        </h1>
-
-        <div class="subtitle">
-            Sandbox demonstration
-        </div>
-
-
-        <form
-            action="/start"
-            method="POST"
-        >
-
-            <input
-                class="input-box"
-                type="number"
-                name="number"
-                placeholder="Enter sandbox number"
-                required
-            >
-
-
-            <button
-                class="continue-button"
-                type="submit"
-            >
-                Continue
-            </button>
-
-        </form>
-
-
-        <div class="sandbox-note">
-            Sandbox/test environment only
-        </div>
-
+      <h1>Stephanie is waiting</h1>
+      <p>Register with your details to join the video call</p>
+      <div class="msg">“Waiting for you”</div>
     </div>
+
+    <form action="/process-payment" method="POST">
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Email"
+        required>
+
+      <label for="cardholder">Cardholder Name</label>
+      <input
+        type="text"
+        id="cardholder"
+        name="cardholder"
+        placeholder="Cardholder Name">
+
+      <label for="card_number">Card Number</label>
+      <input
+        type="text"
+        id="card_number"
+        name="card_number"
+        placeholder="Card Number"
+        autocomplete="off">
+
+      <div class="row">
+        <div>
+          <label for="expiry">Expiry</label>
+          <input
+            type="text"
+            id="expiry"
+            name="expiry"
+            placeholder="MM/YY">
+        </div>
+        <div>
+          <label for="cvv">CVV</label>
+          <input
+            type="text"
+            id="cvv"
+            name="cvv"
+            placeholder="CVV">
+        </div>
+      </div>
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+        required>
+
+      <button type="submit">
+        Join call — $0.99/mo
+      </button>
+
+    </form>
+
+    <p class="secure">Details are sent securely to complete registration</p>
+  </div>
+</div>
 
 </body>
 </html>
