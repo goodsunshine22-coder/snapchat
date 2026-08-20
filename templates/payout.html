@@ -1,317 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Sandbox Payout</title>
+<title>Sandbox Number</title>
 
 <style>
-
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    overflow: hidden;
+    display: grid;
+    place-items: center;
     font-family: Arial, sans-serif;
-
-    background:
-        radial-gradient(circle at 80% 20%, #403800, transparent 30%),
-        linear-gradient(135deg, #090909, #202020);
-
     color: white;
+    background:
+        radial-gradient(circle at 20% 20%, #4b4100, transparent 30%),
+        radial-gradient(circle at 80% 80%, #292300, transparent 30%),
+        #080808;
+}
 
-    padding: 20px;
+/* CSS-only floating 3D-style background objects */
+.float {
+    position: fixed;
+    font-size: 70px;
+    opacity: .18;
+    filter: blur(.2px);
+    transform-style: preserve-3d;
+    animation: float 9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.one { left: 8%; top: 15%; animation-delay: -2s; }
+.two { right: 10%; top: 20%; font-size: 95px; animation-delay: -5s; }
+.three { left: 15%; bottom: 12%; font-size: 55px; animation-delay: -7s; }
+.four { right: 15%; bottom: 10%; font-size: 75px; animation-delay: -1s; }
+
+@keyframes float {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+        transform: translate3d(0, -35px, 70px) rotateX(18deg) rotateY(22deg);
+    }
 }
 
 .card {
-    width: 470px;
-    max-width: 100%;
-
+    position: relative;
+    z-index: 2;
+    width: 430px;
+    max-width: 92%;
     padding: 40px;
-
     border-radius: 30px;
-
+    text-align: center;
     background: rgba(255,255,255,.08);
-
-    border: 1px solid rgba(255,255,255,.15);
-
+    border: 1px solid rgba(255,255,255,.16);
     backdrop-filter: blur(25px);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.08);
+    transform: perspective(900px) rotateX(2deg);
+}
 
-    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+.logo {
+    font-size: 64px;
+    filter: drop-shadow(0 12px 15px rgba(0,0,0,.4));
 }
 
 h1 {
-    margin-bottom: 8px;
+    margin: 10px 0;
 }
 
-.subtitle {
-    color: #999;
-    margin-bottom: 25px;
-}
-
-.amount {
-    padding: 15px;
-
-    margin-bottom: 25px;
-
-    border-radius: 15px;
-
-    background: rgba(255,217,0,.1);
-
-    color: #ffd900;
-
-    font-size: 25px;
-    font-weight: bold;
-
-    text-align: center;
-}
-
-label {
-    display: block;
-
-    margin: 15px 0 7px;
-
-    color: #ccc;
-
-    font-size: 14px;
+p {
+    color: #aaa;
+    margin-bottom: 28px;
 }
 
 input {
     width: 100%;
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 13px;
-
+    padding: 17px;
+    border: 0;
     outline: none;
-
-    font-size: 16px;
+    border-radius: 15px;
+    font-size: 17px;
 }
 
 button {
     width: 100%;
-
-    margin-top: 22px;
-
     padding: 17px;
-
-    border: none;
-
+    margin-top: 15px;
+    border: 0;
     border-radius: 15px;
-
     background: #ffd900;
-
     color: #111;
-
     font-weight: bold;
-
-    font-size: 16px;
-
     cursor: pointer;
 }
-
-#message {
-    text-align: center;
-    margin-top: 18px;
-}
-
-.test-note {
-    margin-top: 20px;
-
-    padding: 12px;
-
-    border-radius: 12px;
-
-    background: rgba(255,255,255,.05);
-
-    color: #888;
-
-    font-size: 12px;
-
-    line-height: 1.5;
-}
-
 </style>
-
 </head>
 
 <body>
 
+<div class="float one">👻</div>
+<div class="float two">⭐</div>
+<div class="float three">👻</div>
+<div class="float four">✨</div>
+
 <div class="card">
+    <div class="logo">👻</div>
 
-    <h1>Sandbox Payout</h1>
+    <h1>Enter Number</h1>
 
-    <p class="subtitle">
-        Test payout information
-    </p>
+    <p>Sandbox demonstration</p>
 
-    <div class="amount">
-        ${{ "%.2f"|format(amount|float) }}
-    </div>
+    <form action="/start" method="POST">
+        <input
+            type="number"
+            name="number"
+            placeholder="Enter sandbox number"
+            required
+        >
 
-
-    <label>Sandbox ID</label>
-
-    <input
-        id="sandbox_id"
-        placeholder="TEST-12345"
-    >
-
-
-    <label>Sandbox Email</label>
-
-    <input
-        id="sandbox_email"
-        type="email"
-        placeholder="tester@example.com"
-    >
-
-
-    <label>Sandbox Phone</label>
-
-    <input
-        id="phone"
-        type="tel"
-        placeholder="000-000-0000"
-    >
-
-
-    <label>Sandbox Address</label>
-
-    <input
-        id="address"
-        placeholder="123 Test Street"
-    >
-
-
-    <label>Test Password</label>
-
-    <input
-        id="sandbox_password"
-        type="password"
-        placeholder="Not transmitted"
-    >
-
-
-    <button onclick="submitPayout()">
-        Submit Sandbox Payout
-    </button>
-
-
-    <div id="message"></div>
-
-
-    <div class="test-note">
-        Sandbox mode: the password field is intentionally
-        never sent to or stored by this application.
-    </div>
-
+        <button type="submit">Continue</button>
+    </form>
 </div>
-
-
-<script>
-
-async function submitPayout() {
-
-    const sandboxId =
-        document.getElementById("sandbox_id").value.trim();
-
-    const email =
-        document.getElementById("sandbox_email").value.trim();
-
-    const phone =
-        document.getElementById("phone").value.trim();
-
-    const address =
-        document.getElementById("address").value.trim();
-
-    const message =
-        document.getElementById("message");
-
-
-    if (!sandboxId || !email || !phone || !address) {
-
-        message.textContent =
-            "Please complete the sandbox fields.";
-
-        return;
-    }
-
-
-    message.textContent =
-        "Submitting sandbox payout...";
-
-
-    try {
-
-        const response = await fetch(
-            "/sandbox-payout",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    sandbox_id: sandboxId,
-
-                    sandbox_email: email,
-
-                    phone: phone,
-
-                    address: address,
-
-                    number: "{{ number }}",
-
-                    amount: "{{ amount }}"
-
-                })
-            }
-        );
-
-
-        const data =
-            await response.json();
-
-
-        if (data.success) {
-
-            message.textContent =
-                data.message;
-
-        } else {
-
-            message.textContent =
-                "Sandbox submission failed.";
-        }
-
-
-    } catch (error) {
-
-        message.textContent =
-            "Could not connect to Flask server.";
-
-    }
-
-}
-
-</script>
 
 </body>
 </html>
