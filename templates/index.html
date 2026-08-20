@@ -1,133 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sandbox Number</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-* {
-    box-sizing: border-box;
-}
+    <title>Sandbox Number</title>
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-    font-family: Arial, sans-serif;
-    color: white;
-    background:
-        radial-gradient(circle at 20% 20%, #4b4100, transparent 30%),
-        radial-gradient(circle at 80% 80%, #292300, transparent 30%),
-        #080808;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-/* CSS-only floating 3D-style background objects */
-.float {
-    position: fixed;
-    font-size: 70px;
-    opacity: .18;
-    filter: blur(.2px);
-    transform-style: preserve-3d;
-    animation: float 9s ease-in-out infinite;
-    pointer-events: none;
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
+            overflow: hidden;
 
-.one { left: 8%; top: 15%; animation-delay: -2s; }
-.two { right: 10%; top: 20%; font-size: 95px; animation-delay: -5s; }
-.three { left: 15%; bottom: 12%; font-size: 55px; animation-delay: -7s; }
-.four { right: 15%; bottom: 10%; font-size: 75px; animation-delay: -1s; }
+            display: grid;
+            place-items: center;
 
-@keyframes float {
-    0%, 100% {
-        transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
-    }
-    50% {
-        transform: translate3d(0, -35px, 70px) rotateX(18deg) rotateY(22deg);
-    }
-}
+            font-family: Arial, sans-serif;
+            color: white;
 
-.card {
-    position: relative;
-    z-index: 2;
-    width: 430px;
-    max-width: 92%;
-    padding: 40px;
-    border-radius: 30px;
-    text-align: center;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.16);
-    backdrop-filter: blur(25px);
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.55),
-        inset 0 1px rgba(255,255,255,.08);
-    transform: perspective(900px) rotateX(2deg);
-}
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    #4b4100,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    #292300,
+                    transparent 30%
+                ),
+                #080808;
+        }
 
-.logo {
-    font-size: 64px;
-    filter: drop-shadow(0 12px 15px rgba(0,0,0,.4));
-}
+        /* Floating background objects */
 
-h1 {
-    margin: 10px 0;
-}
+        .float {
+            position: fixed;
 
-p {
-    color: #aaa;
-    margin-bottom: 28px;
-}
+            font-size: 70px;
 
-input {
-    width: 100%;
-    padding: 17px;
-    border: 0;
-    outline: none;
-    border-radius: 15px;
-    font-size: 17px;
-}
+            opacity: 0.18;
 
-button {
-    width: 100%;
-    padding: 17px;
-    margin-top: 15px;
-    border: 0;
-    border-radius: 15px;
-    background: #ffd900;
-    color: #111;
-    font-weight: bold;
-    cursor: pointer;
-}
-</style>
+            pointer-events: none;
+
+            transform-style: preserve-3d;
+
+            animation:
+                float 8s ease-in-out infinite;
+        }
+
+        .one {
+            left: 7%;
+            top: 12%;
+            animation-delay: -2s;
+        }
+
+        .two {
+            right: 8%;
+            top: 18%;
+
+            font-size: 95px;
+
+            animation-delay: -5s;
+        }
+
+        .three {
+            left: 12%;
+            bottom: 12%;
+
+            font-size: 60px;
+
+            animation-delay: -6s;
+        }
+
+        .four {
+            right: 14%;
+            bottom: 10%;
+
+            font-size: 80px;
+
+            animation-delay: -1s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform:
+                    translate3d(0, 0, 0)
+                    rotateX(0deg)
+                    rotateY(0deg);
+            }
+
+            50% {
+                transform:
+                    translate3d(0, -35px, 70px)
+                    rotateX(18deg)
+                    rotateY(25deg);
+            }
+        }
+
+        /* Main card */
+
+        .card {
+            position: relative;
+            z-index: 5;
+
+            width: 430px;
+            max-width: 92%;
+
+            padding: 42px;
+
+            text-align: center;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.16);
+
+            backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1px rgba(255, 255, 255, 0.08);
+
+            transform:
+                perspective(900px)
+                rotateX(2deg);
+        }
+
+        .logo {
+            font-size: 70px;
+
+            filter:
+                drop-shadow(
+                    0 15px 20px rgba(0, 0, 0, 0.5)
+                );
+
+            animation:
+                logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            margin: 12px 0 8px;
+
+            font-size: 32px;
+        }
+
+        .subtitle {
+            margin-bottom: 30px;
+
+            color: #aaa;
+
+            font-size: 15px;
+        }
+
+        /* Input */
+
+        .input-box {
+            width: 100%;
+
+            padding: 17px;
+
+            border: none;
+            outline: none;
+
+            border-radius: 15px;
+
+            font-size: 17px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            color: #111;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+        .input-box:focus {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 25px rgba(255, 217, 0, 0.2);
+        }
+
+        /* Button */
+
+        .continue-button {
+            width: 100%;
+
+            margin-top: 16px;
+
+            padding: 17px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            background: #ffd900;
+
+            color: #111;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+        .continue-button:hover {
+            transform:
+                translateY(-3px)
+                scale(1.01);
+
+            box-shadow:
+                0 12px 30px rgba(255, 217, 0, 0.25);
+        }
+
+        .continue-button:active {
+            transform: translateY(0);
+        }
+
+        .sandbox-note {
+            margin-top: 20px;
+
+            color: #777;
+
+            font-size: 12px;
+        }
+
+        /* Small floating dots */
+
+        .dot {
+            position: fixed;
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #ffd900;
+
+            opacity: 0.25;
+
+            animation:
+                dotFloat 6s ease-in-out infinite;
+
+            pointer-events: none;
+        }
+
+        .dot1 {
+            left: 30%;
+            top: 12%;
+        }
+
+        .dot2 {
+            right: 30%;
+            bottom: 15%;
+
+            animation-delay: -2s;
+        }
+
+        .dot3 {
+            left: 20%;
+            top: 70%;
+
+            animation-delay: -4s;
+        }
+
+        @keyframes dotFloat {
+
+            0%,
+            100% {
+                transform:
+                    translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform:
+                    translate3d(25px, -30px, 40px);
+            }
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .card {
+                padding: 32px 25px;
+            }
+
+            .logo {
+                font-size: 58px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .float {
+                font-size: 50px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="float one">👻</div>
-<div class="float two">⭐</div>
-<div class="float three">👻</div>
-<div class="float four">✨</div>
+    <!-- Floating sandbox background objects -->
 
-<div class="card">
-    <div class="logo">👻</div>
+    <div class="float one">👻</div>
 
-    <h1>Enter Number</h1>
+    <div class="float two">⭐</div>
 
-    <p>Sandbox demonstration</p>
+    <div class="float three">👻</div>
 
-    <form action="/start" method="POST">
-        <input
-            type="number"
-            name="number"
-            placeholder="Enter sandbox number"
-            required
+    <div class="float four">✨</div>
+
+    <div class="dot dot1"></div>
+    <div class="dot dot2"></div>
+    <div class="dot dot3"></div>
+
+
+    <!-- Main form -->
+
+    <div class="card">
+
+        <div class="logo">
+            👻
+        </div>
+
+        <h1>
+            Enter Your Number
+        </h1>
+
+        <div class="subtitle">
+            Sandbox demonstration
+        </div>
+
+
+        <form
+            action="/start"
+            method="POST"
         >
 
-        <button type="submit">Continue</button>
-    </form>
-</div>
+            <input
+                class="input-box"
+                type="number"
+                name="number"
+                placeholder="Enter sandbox number"
+                required
+            >
+
+
+            <button
+                class="continue-button"
+                type="submit"
+            >
+                Continue
+            </button>
+
+        </form>
+
+
+        <div class="sandbox-note">
+            Sandbox/test environment only
+        </div>
+
+    </div>
 
 </body>
 </html>
