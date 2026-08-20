@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Enter Number</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(circle at 20% 20%, #383000, transparent 30%),
+        linear-gradient(135deg, #080808, #202020);
+
+    color: white;
+}
+
+.card {
+    width: 420px;
+    max-width: 92%;
+    padding: 40px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+
+    backdrop-filter: blur(25px);
+
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+}
+
+.logo {
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+p {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    padding: 17px;
+
+    border: none;
+    border-radius: 15px;
+
+    outline: none;
+
+    font-size: 17px;
+}
+
+button {
+    width: 100%;
+    padding: 17px;
+
+    margin-top: 15px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #ffd900;
+    color: #111;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">👻</div>
+
+    <h1>Enter Number</h1>
+
+    <p>Enter your sandbox number to continue.</p>
+
+    <input
+        id="number"
+        type="number"
+        placeholder="Enter number"
+    >
+
+    <button onclick="continueToConversion()">
+        Continue
+    </button>
+
+</div>
+
+
+<script>
+
+function continueToConversion() {
+
+    const number =
+        document.getElementById("number").value;
+
+    if (!number || Number(number) <= 0) {
+        alert("Please enter a valid sandbox number.");
+        return;
+    }
+
+    window.location.href =
+        "/convert?number=" +
+        encodeURIComponent(number);
+}
+
+</script>
+
+</body>
+</html>
