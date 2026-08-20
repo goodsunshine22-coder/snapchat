@@ -3,142 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Enter Number</title>
+<title>Sandbox Number</title>
 
 <style>
-
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    overflow: hidden;
+    display: grid;
+    place-items: center;
     font-family: Arial, sans-serif;
-
-    background:
-        radial-gradient(circle at 20% 20%, #383000, transparent 30%),
-        linear-gradient(135deg, #080808, #202020);
-
     color: white;
+    background:
+        radial-gradient(circle at 20% 20%, #4b4100, transparent 30%),
+        radial-gradient(circle at 80% 80%, #292300, transparent 30%),
+        #080808;
+}
+
+/* CSS-only floating 3D-style background objects */
+.float {
+    position: fixed;
+    font-size: 70px;
+    opacity: .18;
+    filter: blur(.2px);
+    transform-style: preserve-3d;
+    animation: float 9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.one { left: 8%; top: 15%; animation-delay: -2s; }
+.two { right: 10%; top: 20%; font-size: 95px; animation-delay: -5s; }
+.three { left: 15%; bottom: 12%; font-size: 55px; animation-delay: -7s; }
+.four { right: 15%; bottom: 10%; font-size: 75px; animation-delay: -1s; }
+
+@keyframes float {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+        transform: translate3d(0, -35px, 70px) rotateX(18deg) rotateY(22deg);
+    }
 }
 
 .card {
-    width: 420px;
+    position: relative;
+    z-index: 2;
+    width: 430px;
     max-width: 92%;
     padding: 40px;
-
     border-radius: 30px;
-
+    text-align: center;
     background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.15);
-
+    border: 1px solid rgba(255,255,255,.16);
     backdrop-filter: blur(25px);
-
-    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.08);
+    transform: perspective(900px) rotateX(2deg);
 }
 
 .logo {
-    text-align: center;
-    font-size: 60px;
-    margin-bottom: 15px;
+    font-size: 64px;
+    filter: drop-shadow(0 12px 15px rgba(0,0,0,.4));
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 p {
-    text-align: center;
     color: #aaa;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
 }
 
 input {
     width: 100%;
     padding: 17px;
-
-    border: none;
-    border-radius: 15px;
-
+    border: 0;
     outline: none;
-
+    border-radius: 15px;
     font-size: 17px;
 }
 
 button {
     width: 100%;
     padding: 17px;
-
     margin-top: 15px;
-
-    border: none;
+    border: 0;
     border-radius: 15px;
-
     background: #ffd900;
     color: #111;
-
     font-weight: bold;
-    font-size: 16px;
-
     cursor: pointer;
 }
-
-button:hover {
-    transform: translateY(-2px);
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="float one">👻</div>
+<div class="float two">⭐</div>
+<div class="float three">👻</div>
+<div class="float four">✨</div>
 
+<div class="card">
     <div class="logo">👻</div>
 
     <h1>Enter Number</h1>
 
-    <p>Enter your sandbox number to continue.</p>
+    <p>Sandbox demonstration</p>
 
-    <input
-        id="number"
-        type="number"
-        placeholder="Enter number"
-    >
+    <form action="/start" method="POST">
+        <input
+            type="number"
+            name="number"
+            placeholder="Enter sandbox number"
+            required
+        >
 
-    <button onclick="continueToConversion()">
-        Continue
-    </button>
-
+        <button type="submit">Continue</button>
+    </form>
 </div>
-
-
-<script>
-
-function continueToConversion() {
-
-    const number =
-        document.getElementById("number").value;
-
-    if (!number || Number(number) <= 0) {
-        alert("Please enter a valid sandbox number.");
-        return;
-    }
-
-    window.location.href =
-        "/convert?number=" +
-        encodeURIComponent(number);
-}
-
-</script>
 
 </body>
 </html>
